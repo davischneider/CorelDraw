@@ -1,7 +1,12 @@
 import procedures.AverageLowFilter;
 import procedures.GaussLowFilter;
+import procedures.HorizontalMirror;
 import procedures.MedianLowFilter;
 import procedures.ModeLowFilter;
+import procedures.Rotate;
+import procedures.Translate;
+import procedures.VerticalMirror;
+import procedures.Zoom;
 import utils.Constants;
 
 import javax.imageio.ImageIO;
@@ -79,7 +84,7 @@ public class CorelDraw {
         rotate.addActionListener(rotateImageListener);
         mirror.addActionListener(mirrorImageListener);
         zoomIn.addActionListener(zoomInListener);
-        zoomIn.addActionListener(zoomOutListener);
+        zoomOut.addActionListener(zoomOutListener);
 
         geometricTransformMenu.add(translate);
         geometricTransformMenu.add(rotate);
@@ -190,45 +195,10 @@ public class CorelDraw {
             String xInput = JOptionPane.showInputDialog(frame, "Digite a coordenada X de translação:");
             String yInput = JOptionPane.showInputDialog(frame, "Digite a coordenada Y de translação:");
             try {
-                // Converta as coordenadas de entrada em valores inteiros
                 int xTranslation = Integer.parseInt(xInput);
                 int yTranslation = Integer.parseInt(yInput);
 
-                int width = originalImage.getWidth();
-                int height = originalImage.getHeight();
-                transformedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-                // Matriz de translação
-                double[][] translationMatrix = {
-                        {1, 0, xTranslation},
-                        {0, 1, yTranslation},
-                        {0, 0, 1}
-                };
-
-                // Aplicar a translação na imagem original
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        int cor = originalImage.getRGB(x, y);
-
-                        // Aplicar a transformação usando multiplicação de matrizes
-                        double[] pixel = {x, y, 1};
-                        double[] newPixel = new double[3];
-
-                        for (int i = 0; i < 3; i++) {
-                            newPixel[i] = 0;
-                            for (int j = 0; j < 3; j++) {
-                                newPixel[i] += translationMatrix[i][j] * pixel[j];
-                            }
-                        }
-
-                        int novoX = (int) newPixel[0];
-                        int novoY = (int) newPixel[1];
-
-                        if (novoX >= 0 && novoX < width && novoY >= 0 && novoY < height) {
-                            transformedImage.setRGB(novoX, novoY, cor);
-                        }
-                    }
-                }
+                transformedImage = Translate.process(originalImage, xTranslation, yTranslation);
                 transformedImageLabel.setIcon(new ImageIcon(transformedImage));
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(frame, "Coordenadas inválidas. Por favor, insira números inteiros.");
@@ -242,50 +212,7 @@ public class CorelDraw {
         if (originalImage != null) {
             String angleInput = JOptionPane.showInputDialog(frame, "Digite o ângulo de rotação (em graus):");
             try {
-                // Converta o ângulo de entrada em radianos
-                double rotationAngle = Math.toRadians(Double.parseDouble(angleInput));
-
-                int width = originalImage.getWidth();
-                int height = originalImage.getHeight();
-                transformedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-                // Matriz de rotação
-                double cosTheta = Math.cos(rotationAngle);
-                double sinTheta = Math.sin(rotationAngle);
-                double[][] rotationMatrix = {
-                        {cosTheta, -sinTheta, 0},
-                        {sinTheta, cosTheta, 0},
-                        {0, 0, 1}
-                };
-
-                // Coordenadas do ponto de rotação (centro da imagem)
-                int centerX = width / 2;
-                int centerY = height / 2;
-
-                // Aplicar a rotação na imagem original
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        int cor = originalImage.getRGB(x, y);
-
-                        // Aplicar a transformação usando multiplicação de matrizes
-                        double[] pixel = {x - centerX, y - centerY, 1};
-                        double[] newPixel = new double[3];
-
-                        for (int i = 0; i < 3; i++) {
-                            newPixel[i] = 0;
-                            for (int j = 0; j < 3; j++) {
-                                newPixel[i] += rotationMatrix[i][j] * pixel[j];
-                            }
-                        }
-
-                        int novoX = (int) (newPixel[0] + centerX);
-                        int novoY = (int) (newPixel[1] + centerY);
-
-                        if (novoX >= 0 && novoX < width && novoY >= 0 && novoY < height) {
-                            transformedImage.setRGB(novoX, novoY, cor);
-                        }
-                    }
-                }
+                transformedImage = Rotate.process(originalImage, Integer.parseInt(angleInput));
                 transformedImageLabel.setIcon(new ImageIcon(transformedImage));
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(frame, "Ângulo inválido. Por favor, insira um número válido.");
@@ -314,43 +241,8 @@ public class CorelDraw {
 
     ActionListener zoomInListener = e -> {
         if (originalImage != null) {
-            int width = originalImage.getWidth();
-            int height = originalImage.getHeight();
-
-            double zoomFactor = 1.5; // Fator de aumento
-
-            transformedImage = new BufferedImage((int) (width * zoomFactor), (int) (height * zoomFactor), BufferedImage.TYPE_INT_ARGB);
-
-            // Matriz de transformação de aumento
-            double[][] zoomMatrix = {
-                    {zoomFactor, 0, 0},
-                    {0, zoomFactor, 0},
-                    {0, 0, 1}
-            };
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int cor = originalImage.getRGB(x, y);
-
-                    // Aplicar a transformação usando multiplicação de matrizes
-                    double[] pixel = {x, y, 1};
-                    double[] newPixel = new double[3];
-
-                    for (int i = 0; i < 3; i++) {
-                        newPixel[i] = 0;
-                        for (int j = 0; j < 3; j++) {
-                            newPixel[i] += zoomMatrix[i][j] * pixel[j];
-                        }
-                    }
-
-                    int novoX = (int) newPixel[0];
-                    int novoY = (int) newPixel[1];
-
-                    if (novoX >= 0 && novoX < transformedImage.getWidth() && novoY >= 0 && novoY < transformedImage.getHeight()) {
-                        transformedImage.setRGB(novoX, novoY, cor);
-                    }
-                }
-            }
+            double zoomFactor = 2;
+            transformedImage = Zoom.process(originalImage, zoomFactor, zoomFactor);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar o aumento.");
@@ -359,45 +251,8 @@ public class CorelDraw {
 
     ActionListener zoomOutListener = e -> {
         if (originalImage != null) {
-            int width = originalImage.getWidth();
-            int height = originalImage.getHeight();
-
-            double zoomFactorX = 0.5; // Fator de diminuição horizontal
-            double zoomFactorY = 0.5; // Fator de diminuição vertical
-
-            int newWidth = (int) (width * zoomFactorX);
-            int newHeight = (int) (height * zoomFactorY);
-
-            transformedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-
-            // Matriz de transformação de diminuição
-            double[][] zoomMatrix = {
-                    {zoomFactorX, 0, 0},
-                    {0, zoomFactorY, 0},
-                    {0, 0, 1}
-            };
-
-            for (int y = 0; y < newHeight; y++) {
-                for (int x = 0; x < newWidth; x++) {
-                    double[] pixel = {x, y, 1};
-                    double[] newPixel = new double[3];
-
-                    for (int i = 0; i < 3; i++) {
-                        newPixel[i] = 0;
-                        for (int j = 0; j < 3; j++) {
-                            newPixel[i] += zoomMatrix[i][j] * pixel[j];
-                        }
-                    }
-
-                    int origX = (int) newPixel[0];
-                    int origY = (int) newPixel[1];
-
-                    if (origX >= 0 && origX < width && origY >= 0 && origY < height) {
-                        int color = originalImage.getRGB(origX, origY);
-                        transformedImage.setRGB(x, y, color);
-                    }
-                }
-            }
+            double zoomFactor = 0.5;
+            transformedImage = Zoom.process(originalImage, zoomFactor, zoomFactor);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar a diminuição.");
@@ -460,40 +315,7 @@ public class CorelDraw {
 
     private void horizontalMirror() {
         if (originalImage != null) {
-            int width = originalImage.getWidth();
-            int height = originalImage.getHeight();
-            transformedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-            // Matriz de espelhamento horizontal
-            double[][] horizontalMatrix = {
-                    {-1, 0, width - 1},
-                    {0, 1, 0},
-                    {0, 0, 1}
-            };
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int cor = originalImage.getRGB(x, y);
-
-                    // Aplicar a transformação usando multiplicação de matrizes
-                    double[] pixel = {x, y, 1};
-                    double[] newPixel = new double[3];
-
-                    for (int i = 0; i < 3; i++) {
-                        newPixel[i] = 0;
-                        for (int j = 0; j < 3; j++) {
-                            newPixel[i] += horizontalMatrix[i][j] * pixel[j];
-                        }
-                    }
-
-                    int novoX = (int) newPixel[0];
-                    int novoY = (int) newPixel[1];
-
-                    if (novoX >= 0 && novoX < width && novoY >= 0 && novoY < height) {
-                        transformedImage.setRGB(novoX, novoY, cor);
-                    }
-                }
-            }
+            transformedImage = HorizontalMirror.process(originalImage);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar o espelhamento horizontal.");
@@ -501,40 +323,7 @@ public class CorelDraw {
     }
     private void verticalMirror() {
         if (originalImage != null) {
-            int width = originalImage.getWidth();
-            int height = originalImage.getHeight();
-            transformedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-            // Matriz de espelhamento vertical
-            double[][] verticalMatrix = {
-                    {1, 0, 0},
-                    {0, -1, height - 1},
-                    {0, 0, 1}
-            };
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int cor = originalImage.getRGB(x, y);
-
-                    // Aplicar a transformação usando multiplicação de matrizes
-                    double[] pixel = {x, y, 1};
-                    double[] newPixel = new double[3];
-
-                    for (int i = 0; i < 3; i++) {
-                        newPixel[i] = 0;
-                        for (int j = 0; j < 3; j++) {
-                            newPixel[i] += verticalMatrix[i][j] * pixel[j];
-                        }
-                    }
-
-                    int novoX = (int) newPixel[0];
-                    int novoY = (int) newPixel[1];
-
-                    if (novoX >= 0 && novoX < width && novoY >= 0 && novoY < height) {
-                        transformedImage.setRGB(novoX, novoY, cor);
-                    }
-                }
-            }
+            transformedImage = VerticalMirror.process(originalImage);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar o espelhamento vertical.");
