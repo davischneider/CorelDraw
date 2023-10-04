@@ -1,3 +1,9 @@
+import procedures.AverageLowFilter;
+import procedures.GaussLowFilter;
+import procedures.MedianLowFilter;
+import procedures.ModeLowFilter;
+import utils.Constants;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -437,14 +443,14 @@ public class CorelDraw {
         String[] options = {"Média", "Moda", "Mediana", "Gauss"};
         int choice = JOptionPane.showOptionDialog(frame, "Qual filtro deseja aplicar?",
                 "Filtro passa baixa", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options, options);
+                null, options, options[0]);
 
         if (choice == JOptionPane.CLOSED_OPTION) {
             System.out.println("Nenhuma opção selecionada.");
         } else {
             switch (choice) {
-                case 0 -> handleMediumFilter();
-                case 1 -> handleFashionFilter();
+                case 0 -> handleAverageFilter();
+                case 1 -> handleModeFilter();
                 case 2 -> handleMedianFilter();
                 case 3 -> handleGaussFilter();
                 default -> System.out.println("Opção desconhecida selecionada.");
@@ -535,131 +541,39 @@ public class CorelDraw {
         }
     }
 
-    private void handleMediumFilter() {
-        System.out.println("Média selecionada");
+    private void handleAverageFilter() {
         if (originalImage != null) {
-            try {
-                // Crie uma cópia da imagem original
-                transformedImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-                // Defina o kernel para o filtro de média
-                int[][] kernel = {
-                        {1, 1, 1},
-                        {1, 1, 1},
-                        {1, 1, 1}
-                };
-
-                int kernelSize = 3; // Tamanho do kernel (3x3 neste caso)
-
-                // Aplicar a convolução
-                for (int y = 1; y < originalImage.getHeight() - 1; y++) {
-                    for (int x = 1; x < originalImage.getWidth() - 1; x++) {
-                        int sumRed = 0;
-                        int sumGreen = 0;
-                        int sumBlue = 0;
-
-                        for (int j = -1; j <= 1; j++) {
-                            for (int i = -1; i <= 1; i++) {
-                                int pixel = originalImage.getRGB(x + i, y + j);
-                                int red = (pixel >> 16) & 0xFF;
-                                int green = (pixel >> 8) & 0xFF;
-                                int blue = pixel & 0xFF;
-
-                                sumRed += red * kernel[j + 1][i + 1];
-                                sumGreen += green * kernel[j + 1][i + 1];
-                                sumBlue += blue * kernel[j + 1][i + 1];
-                            }
-                        }
-
-                        int newRed = sumRed / 9; // Normalização pela soma dos pesos do kernel
-                        int newGreen = sumGreen / 9;
-                        int newBlue = sumBlue / 9;
-
-                        int newPixel = (newRed << 16) | (newGreen << 8) | newBlue | 0xFF000000;
-                        transformedImage.setRGB(x, y, newPixel);
-                    }
-                }
-
-                // Atualize a label da imagem transformada
-                transformedImageLabel.setIcon(new ImageIcon(transformedImage));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar uma operação de transformação.");
-        }
-    }
-    private void handleFashionFilter() {
-        if (originalImage != null) {
-            int width = originalImage.getWidth();
-            int height = originalImage.getHeight();
-
-            int kernelSize = 3; // Tamanho do kernel (3x3 neste caso)
-
-            transformedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int[] neighborhoodRed = new int[kernelSize * kernelSize];
-                    int[] neighborhoodGreen = new int[kernelSize * kernelSize];
-                    int[] neighborhoodBlue = new int[kernelSize * kernelSize];
-
-                    int neighborCount = 0;
-
-                    // Preencha o vetor de vizinhança com valores dos pixels
-                    for (int j = -1; j <= 1; j++) {
-                        for (int i = -1; i <= 1; i++) {
-                            int newX = x + i;
-                            int newY = y + j;
-
-                            if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
-                                int pixel = originalImage.getRGB(newX, newY);
-                                neighborhoodRed[neighborCount] = (pixel >> 16) & 0xFF;
-                                neighborhoodGreen[neighborCount] = (pixel >> 8) & 0xFF;
-                                neighborhoodBlue[neighborCount] = pixel & 0xFF;
-                                neighborCount++;
-                            }
-                        }
-                    }
-
-                    // Encontre o valor de pixel mais comum (Moda) em cada canal de cor
-                    int modaRed = findModa(neighborhoodRed, neighborCount);
-                    int modaGreen = findModa(neighborhoodGreen, neighborCount);
-                    int modaBlue = findModa(neighborhoodBlue, neighborCount);
-
-                    // Defina o novo valor RGB no pixel da imagem transformada
-                    int newPixel = (modaRed << 16) | (modaGreen << 8) | modaBlue | 0xFF000000;
-                    transformedImage.setRGB(x, y, newPixel);
-                }
-            }
+            transformedImage = AverageLowFilter.process(originalImage);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
-            JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de aplicar o filtro.");
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    }
+    private void handleModeFilter() {
+        if (originalImage != null) {
+            transformedImage = ModeLowFilter.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
         }
     }
     private void handleMedianFilter() {
-        System.out.println("Mediana selecionada");
-    }
-    private void handleGaussFilter() {}
-
-    private int findModa(int[] values, int size) {
-        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
-        int modaValue = -1;
-        int maxFrequency = 0;
-
-        for (int i = 0; i < size; i++) {
-            int value = values[i];
-            int frequency = frequencyMap.getOrDefault(value, 0) + 1;
-            frequencyMap.put(value, frequency);
-
-            if (frequency > maxFrequency) {
-                modaValue = value;
-                maxFrequency = frequency;
-            }
+        if (originalImage != null) {
+            transformedImage = MedianLowFilter.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
         }
-
-        return modaValue;
     }
+    private void handleGaussFilter() {
+        if (originalImage != null) {
+            transformedImage = GaussLowFilter.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    }
+
 
 
 
