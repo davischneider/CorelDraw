@@ -1,4 +1,6 @@
 import procedures.AverageLowFilter;
+import procedures.Brightness;
+import procedures.Contrast;
 import procedures.GaussLowFilter;
 import procedures.HorizontalMirror;
 import procedures.MedianLowFilter;
@@ -15,7 +17,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.HashMap;
 
 public class CorelDraw {
 
@@ -97,14 +98,20 @@ public class CorelDraw {
 
     public JMenu createFiltersMenu () {
         JMenu filtersMenu = new JMenu("Filtros");
+        JMenuItem brightness = new JMenuItem("Brilho");
+        JMenuItem contrast = new JMenuItem("Contraste");
         JMenuItem grayscale = new JMenuItem("Grayscale");
         JMenuItem lowPass = new JMenuItem("Passa Baixa");
         JMenuItem highPass = new JMenuItem("Passa Alta");
         JMenuItem threshold = new JMenuItem("Threshold");
 
+        brightness.addActionListener(brightnessListener);
+        contrast.addActionListener(contrastListener);
         grayscale.addActionListener(grayscaleListener);
         lowPass.addActionListener(lowPassListener);
 
+        filtersMenu.add(brightness);
+        filtersMenu.add(contrast);
         filtersMenu.add(grayscale);
         filtersMenu.add(lowPass);
         filtersMenu.add(highPass);
@@ -256,6 +263,26 @@ public class CorelDraw {
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar a diminuição.");
+        }
+    };
+
+    ActionListener brightnessListener = e -> {
+        if (originalImage != null) {
+            int brightness = 90;
+            transformedImage = Brightness.process(originalImage, brightness);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de aplicar o brilho");
+        }
+    };
+
+    ActionListener contrastListener = e -> {
+        if (originalImage != null) {
+            double contrast = 1.5;
+            transformedImage = Contrast.process(originalImage, contrast);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de aplicar o contraste");
         }
     };
 
