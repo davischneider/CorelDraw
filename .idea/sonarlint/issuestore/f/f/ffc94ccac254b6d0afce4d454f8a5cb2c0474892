@@ -1,15 +1,13 @@
 
 7
-java:S1220""Move this file to a named package.8—´ºÂ¯1
+java:S1220""Move this file to a named package.8ğÄÇ’°1
 f
-java:S3252"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8¨´ºÂ¯1
+java:S3252"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8‡ÅÇ’°1
 _
-java:S3252"=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(Ê¤³ñúÿÿÿÿ8¨´ºÂ¯1
+java:S3252 "=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(Ê¤³ñúÿÿÿÿ8‡ÅÇ’°1
 O
-java:S1602¶",Remove useless curly braces around statement(ëÓÖÚıÿÿÿÿ8²´ºÂ¯1
-H	java:S106è"+Replace this use of System.out by a logger.(¦•˜ì8´´ºÂ¯1
-G	java:S106í"+Replace this use of System.out by a logger.(Æ—¡V8µ´ºÂ¯1
-H	java:S106°"+Replace this use of System.out by a logger.(¦•˜ì8·´ºÂ¯1
-G	java:S106·"+Replace this use of System.out by a logger.(Æ—¡V8¸´ºÂ¯1
-P
-java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8‰°ÔÂ¯1
+java:S1602½",Remove useless curly braces around statement(ëÓÖÚıÿÿÿÿ8’ÅÇ’°1
+H	java:S106ï"+Replace this use of System.out by a logger.(¦•˜ì8•ÅÇ’°1
+G	java:S106ô"+Replace this use of System.out by a logger.(Æ—¡V8•ÅÇ’°1
+H	java:S106Ë"+Replace this use of System.out by a logger.(¦•˜ì8™ÅÇ’°1
+G	java:S106Ò"+Replace this use of System.out by a logger.(Æ—¡V8™ÅÇ’°1

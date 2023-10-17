@@ -21,3 +21,10 @@ T
 $src/procedures/HorizontalMirror.java,1/0/10fdf64c941bc8867690613ddc567241d3e09845
 H
 src/procedures/Zoom.java,e/a/eace12b57c8d4ef44705f7ac5441c58f16e70805
+L
+src/procedures/Contrast.java,a/4/a44f5ac1f6c74851aa9fb0795b3afea3e5d7f50f
+N
+src/procedures/Brightness.java,8/a/8a52b5cfdde49ce99a29d1d636590080ef9f14cb
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

@@ -5,9 +5,11 @@ import java.awt.image.BufferedImage;
 public class GaussLowFilter {
 
     private static final double[][] kernel = {
-            {1, 2, 1},
-            {2, 4, 2},
-            {1, 2, 1}
+            {1, 4, 7, 4, 1},
+            {4, 16, 26, 16, 4},
+            {7, 26, 41, 26, 7},
+            {4, 16, 26, 16, 4},
+            {1, 4, 7, 4, 1}
     };
 
     public static BufferedImage process(BufferedImage image) {

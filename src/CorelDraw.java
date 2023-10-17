@@ -167,13 +167,11 @@ public class CorelDraw {
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 try {
-                    // Verifique a extensão do arquivo escolhido
                     String fileName = selectedFile.getName().toLowerCase();
                     if (!fileName.endsWith(".png") && !fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg")) {
-                        fileName += ".png"; // Defina o formato de imagem padrão para PNG se a extensão não estiver especificada
+                        fileName += ".png";
                     }
 
-                    // Salve a imagem transformada no arquivo selecionado
                     ImageIO.write(transformedImage, fileName.substring(fileName.lastIndexOf('.') + 1), selectedFile);
 
                     JOptionPane.showMessageDialog(frame, "Imagem salva com sucesso.");
@@ -193,7 +191,7 @@ public class CorelDraw {
     ActionListener exitListener = e -> {
         int choice = JOptionPane.showConfirmDialog(frame, "Tem certeza que deseja sair?", "Sair", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
-            frame.dispose(); // Fecha a janela
+            frame.dispose();
         }
     };
 
@@ -291,30 +289,23 @@ public class CorelDraw {
             int width = originalImage.getWidth();
             int height = originalImage.getHeight();
 
-            // Crie uma cópia da imagem original
             transformedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-            // Percorra cada pixel da imagem
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     int rgb = originalImage.getRGB(x, y);
 
-                    // Extraia os componentes de cor
                     int red = (rgb >> 16) & 0xFF;
                     int green = (rgb >> 8) & 0xFF;
                     int blue = rgb & 0xFF;
 
-                    // Calcule a média dos componentes para obter o valor de cinza
                     int gray = (red + green + blue) / 3;
 
-                    // Crie um novo valor RGB com as três componentes iguais (grayscale)
                     int newRGB = (gray << 16) | (gray << 8) | gray;
 
-                    // Defina o novo valor RGB no pixel da imagem transformada
                     transformedImage.setRGB(x, y, newRGB);
                 }
             }
-            // Atualize a label da imagem transformada
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, "Abra uma imagem antes de realizar uma operação de transformação.");
@@ -389,8 +380,6 @@ public class CorelDraw {
             JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
         }
     }
-
-
 
 
     public static void main(String[] args) {
