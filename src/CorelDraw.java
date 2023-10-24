@@ -3,6 +3,7 @@ import procedures.Brightness;
 import procedures.Contrast;
 import procedures.GaussLowFilter;
 import procedures.HorizontalMirror;
+import procedures.Kirsch;
 import procedures.MedianLowFilter;
 import procedures.ModeLowFilter;
 import procedures.Rotate;
@@ -109,6 +110,7 @@ public class CorelDraw {
         contrast.addActionListener(contrastListener);
         grayscale.addActionListener(grayscaleListener);
         lowPass.addActionListener(lowPassListener);
+        highPass.addActionListener(highPassListener);
 
         filtersMenu.add(brightness);
         filtersMenu.add(contrast);
@@ -328,6 +330,15 @@ public class CorelDraw {
                 case 3 -> handleGaussFilter();
                 default -> System.out.println("Opção desconhecida selecionada.");
             }
+        }
+    };
+
+    ActionListener highPassListener = e -> {
+        if (originalImage != null) {
+            transformedImage = Kirsch.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
         }
     };
 
