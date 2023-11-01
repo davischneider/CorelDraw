@@ -1,6 +1,8 @@
 import procedures.AverageLowFilter;
 import procedures.Brightness;
 import procedures.Contrast;
+import procedures.Dilation;
+import procedures.Erosion;
 import procedures.GaussLowFilter;
 import procedures.HorizontalMirror;
 import procedures.Kirsch;
@@ -128,6 +130,11 @@ public class CorelDraw {
         JMenuItem erosion = new JMenuItem("Erosão");
         JMenuItem opening = new JMenuItem("Abertura");
         JMenuItem closing = new JMenuItem("Fechamento");
+
+        dilation.addActionListener(dilationListener);
+        erosion.addActionListener(erosionListener);
+        opening.addActionListener(openingListener);
+        closing.addActionListener(closingListener);
 
         morphologyMenu.add(dilation);
         morphologyMenu.add(erosion);
@@ -336,6 +343,44 @@ public class CorelDraw {
     ActionListener highPassListener = e -> {
         if (originalImage != null) {
             transformedImage = Kirsch.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    };
+
+    ActionListener dilationListener = e -> {
+        if (originalImage != null) {
+            transformedImage = Dilation.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    };
+
+    ActionListener erosionListener = e -> {
+        if (originalImage != null) {
+            transformedImage = Erosion.process(originalImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    };
+
+    ActionListener openingListener = e -> {
+        if (originalImage != null) {
+            BufferedImage erosionResultImage = Erosion.process(originalImage);
+            transformedImage = Dilation.process(erosionResultImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    };
+
+    ActionListener closingListener = e -> {
+        if (originalImage != null) {
+            BufferedImage dilationResultImage = Dilation.process(originalImage);
+            transformedImage = Erosion.process(dilationResultImage);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);

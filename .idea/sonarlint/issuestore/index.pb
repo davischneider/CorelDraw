@@ -28,3 +28,9 @@ N
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+=
+CorelDraw.iml,7/b/7bf447c366fe37f3e435f2d6729647b50937a903
+J
+src/procedures/Kirsch.java,b/b/bbf95a76563eefd71ce0f3aa79fcdd4b136e9027
+L
+src/procedures/Dilation.java,b/2/b254f0ec7d66880bc58ffc48147ab61759a0e656

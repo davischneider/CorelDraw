@@ -1,13 +1,13 @@
 
 7
-java:S1220""Move this file to a named package.8ğÄÇ’°1
+java:S1220""Move this file to a named package.8Ö¶Â¸1
 f
-java:S3252"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8‡ÅÇ’°1
+java:S3252!"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8ï¶Â¸1
 _
-java:S3252 "=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(Ê¤³ñúÿÿÿÿ8‡ÅÇ’°1
+java:S3252""=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(Ê¤³ñúÿÿÿÿ8ï¶Â¸1
 O
-java:S1602½",Remove useless curly braces around statement(ëÓÖÚıÿÿÿÿ8’ÅÇ’°1
-H	java:S106ï"+Replace this use of System.out by a logger.(¦•˜ì8•ÅÇ’°1
-G	java:S106ô"+Replace this use of System.out by a logger.(Æ—¡V8•ÅÇ’°1
-H	java:S106Ë"+Replace this use of System.out by a logger.(¦•˜ì8™ÅÇ’°1
-G	java:S106Ò"+Replace this use of System.out by a logger.(Æ—¡V8™ÅÇ’°1
+java:S1602À",Remove useless curly braces around statement(ëÓÖÚıÿÿÿÿ8ı¶Â¸1
+H	java:S106ò"+Replace this use of System.out by a logger.(¦•˜ì8€·Â¸1
+G	java:S106÷"+Replace this use of System.out by a logger.(Æ—¡V8·Â¸1
+H	java:S106Ç"+Replace this use of System.out by a logger.(¦•˜ì8„·Â¸1
+G	java:S106Î"+Replace this use of System.out by a logger.(Æ—¡V8…·Â¸1
