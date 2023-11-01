@@ -9,6 +9,7 @@ import procedures.Kirsch;
 import procedures.MedianLowFilter;
 import procedures.ModeLowFilter;
 import procedures.Rotate;
+import procedures.Threshold;
 import procedures.Translate;
 import procedures.VerticalMirror;
 import procedures.Zoom;
@@ -113,6 +114,7 @@ public class CorelDraw {
         grayscale.addActionListener(grayscaleListener);
         lowPass.addActionListener(lowPassListener);
         highPass.addActionListener(highPassListener);
+        threshold.addActionListener(thresholdActionListener);
 
         filtersMenu.add(brightness);
         filtersMenu.add(contrast);
@@ -381,6 +383,15 @@ public class CorelDraw {
         if (originalImage != null) {
             BufferedImage dilationResultImage = Dilation.process(originalImage);
             transformedImage = Erosion.process(dilationResultImage);
+            transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    };
+
+    ActionListener thresholdActionListener = e -> {
+        if (originalImage != null) {
+            transformedImage = Threshold.process(originalImage);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
         } else {
             JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
