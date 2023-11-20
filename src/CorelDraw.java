@@ -1,5 +1,6 @@
 import procedures.AverageLowFilter;
 import procedures.Brightness;
+import procedures.Challenge;
 import procedures.Contrast;
 import procedures.Dilation;
 import procedures.Erosion;
@@ -21,6 +22,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class CorelDraw {
 
@@ -149,6 +154,8 @@ public class CorelDraw {
     public JMenu createFeatureExtractionMenu () {
         JMenu featureExtractionMenu = new JMenu("Extração de Características");
         JMenuItem challengeItem = new JMenuItem("DESAFIO");
+
+        challengeItem.addActionListener(challengeListener);
 
         featureExtractionMenu.add(challengeItem);
 
@@ -393,6 +400,19 @@ public class CorelDraw {
         if (originalImage != null) {
             transformedImage = Threshold.process(originalImage);
             transformedImageLabel.setIcon(new ImageIcon(transformedImage));
+        } else {
+            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
+        }
+    };
+
+    ActionListener challengeListener = e -> {
+        if (originalImage != null) {
+            List<Integer> histogram = Challenge.process(originalImage);
+//            histogram.stream().mapToInt(Integer::intValue).sum();
+//            Arrays.stream(Constants.ZERO).sum();
+//            Utilizar a soma dos arrays para comparar
+            JOptionPane.showMessageDialog(frame, histogram.toString());
+
         } else {
             JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
         }
