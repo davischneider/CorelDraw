@@ -22,10 +22,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 public class CorelDraw {
 
@@ -408,9 +405,8 @@ public class CorelDraw {
     ActionListener challengeListener = e -> {
         if (originalImage != null) {
             List<Integer> histogram = Challenge.process(originalImage);
-//            histogram.stream().mapToInt(Integer::intValue).sum();
-//            Arrays.stream(Constants.ZERO).sum();
-//            Utilizar a soma dos arrays para comparar
+            Challenge.identify(histogram);
+            System.out.println(histogram);
             JOptionPane.showMessageDialog(frame, histogram.toString());
 
         } else {
