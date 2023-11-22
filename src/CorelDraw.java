@@ -1,6 +1,5 @@
 import procedures.AverageLowFilter;
 import procedures.Brightness;
-import procedures.Challenge;
 import procedures.Contrast;
 import procedures.Dilation;
 import procedures.Erosion;
@@ -14,6 +13,7 @@ import procedures.Threshold;
 import procedures.Translate;
 import procedures.VerticalMirror;
 import procedures.Zoom;
+import utils.ChallengeFrame;
 import utils.Constants;
 
 import javax.imageio.ImageIO;
@@ -22,7 +22,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
 
 public class CorelDraw {
 
@@ -402,17 +401,7 @@ public class CorelDraw {
         }
     };
 
-    ActionListener challengeListener = e -> {
-        if (originalImage != null) {
-            List<Integer> histogram = Challenge.process(originalImage);
-            Challenge.identify(histogram);
-            System.out.println(histogram);
-            JOptionPane.showMessageDialog(frame, histogram.toString());
-
-        } else {
-            JOptionPane.showMessageDialog(frame, Constants.OPEN_IMAGE);
-        }
-    };
+    ActionListener challengeListener = e -> new ChallengeFrame(frame);
 
     private void horizontalMirror() {
         if (originalImage != null) {

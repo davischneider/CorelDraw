@@ -35,18 +35,18 @@ public class Challenge {
         return red < 126 && green < 126 && blue < 126;
     }
 
-    public static void identify(List<Integer> histogram) {
+    public static String identify(List<Integer> histogram) {
+        String value = "Não reconhecido";
         for (Map.Entry<Integer, int[]> entry : Constants.values.entrySet()) {
             int key = entry.getKey();
             int[] arrayToCompare = entry.getValue();
 
             // Comparar o array com a lista
             if (compareArrayWithList(arrayToCompare, histogram)) {
-                System.out.println("O array correspondente à chave " + key + " é igual à lista recebida.");
-            } else {
-                System.out.println("O array correspondente à chave " + key + " não é igual à lista recebida.");
+                value = String.valueOf(key);
             }
         }
+        return value;
     }
 
     private static boolean compareArrayWithList(int[] array, List<Integer> lista) {
