@@ -74,10 +74,16 @@ public class ChallengeFrame extends JFrame {
         if (images.length == 3) {
             for (int i = 0 ; i < images.length ; i++){
                 List<Integer> histogram = Challenge.process(images[i]);
-                String value = Challenge.identify(histogram);
+                String value = "";
+                if (i == 1) {
+                    value = Challenge.identifyOperator(histogram);
+                } else {
+                    value = Challenge.identify(histogram);
+                }
                 values[i] = value;
             }
-            JOptionPane.showMessageDialog(this, Arrays.toString(values));
+
+            JOptionPane.showMessageDialog(this, Challenge.doMath(values));
 
         } else {
             JOptionPane.showMessageDialog(this, "Adicione imagem em todos os campos");

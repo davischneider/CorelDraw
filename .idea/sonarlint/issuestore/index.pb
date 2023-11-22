@@ -34,3 +34,11 @@ J
 src/procedures/Kirsch.java,b/b/bbf95a76563eefd71ce0f3aa79fcdd4b136e9027
 L
 src/procedures/Dilation.java,b/2/b254f0ec7d66880bc58ffc48147ab61759a0e656
+M
+src/procedures/Threshold.java,3/e/3ed243243dc6c37d8b55fe10a3f871c1657fdfd7
+K
+src/procedures/Erosion.java,8/8/88f785b795fd13a5cae5b1104215022e81df8d61
+M
+src/procedures/Challenge.java,8/4/8461246230bec0c88bbe0f42f154ed88820fb5db
+M
+src/utils/ChallengeFrame.java,a/7/a7a316e876c107652f4ae37455534f31c2460ecc

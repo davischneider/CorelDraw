@@ -3,6 +3,7 @@ package procedures;
 import utils.Constants;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -49,6 +50,21 @@ public class Challenge {
         return value;
     }
 
+    public static String identifyOperator(List<Integer> histogram) {
+        String value = "Não reconhecido";
+        int sum = histogram.stream().mapToInt(Integer::intValue).sum();
+        for (Map.Entry<String, int[]> entry : Constants.valuesOperators.entrySet()) {
+            String key = entry.getKey();
+            int arrayToCompare = Arrays.stream(entry.getValue()).sum();
+
+            // Comparar o array com a lista
+            if (arrayToCompare == sum) {
+                value = key;
+            }
+        }
+        return value;
+    }
+
     private static boolean compareArrayWithList(int[] array, List<Integer> lista) {
         if (array.length != lista.size()) {
             return false;
@@ -61,6 +77,21 @@ public class Challenge {
         }
 
         return true;
+    }
+
+    public static String doMath(String[] operation) {
+        String result;
+        String firstNumber = operation[0];
+        String lastNumber = operation[2];
+        String operator = operation[1];
+        result = switch (operator) {
+            case "+" -> String.valueOf(Integer.parseInt(firstNumber) + Integer.parseInt(lastNumber));
+            case "-" -> String.valueOf(Integer.parseInt(firstNumber) - Integer.parseInt(lastNumber));
+            case "*" -> String.valueOf(Integer.parseInt(firstNumber) * Integer.parseInt(lastNumber));
+            case "/" -> String.valueOf(Float.parseFloat(firstNumber) / Float.parseFloat(lastNumber));
+            default -> "Operador desconhecido";
+        };
+        return firstNumber + " " + operator + " " + lastNumber + " = " + result;
     }
 
     public static List<Integer> removeZerosFromExtremes(List<Integer> histogram) {

@@ -1,3 +1,29 @@
 
+:
+java:S2386
+"Make this member "protected".(Î—ğÈ8Êøşù¾1
+:
+java:S2386"Make this member "protected".(Ë†âõ8Êøşù¾1
+?
+java:S2386"Make this member "protected".(—¬Ö¶üÿÿÿÿ8Êøşù¾1
+?
+java:S2386"Make this member "protected".(¯ãúÿÿÿÿ8Êøşù¾1
+?
+java:S2386"Make this member "protected".(«¶Ğßüÿÿÿÿ8Êøşù¾1
+:
+java:S2386"Make this member "protected".(÷ÿ‚¦8Ëøşù¾1
+:
+java:S2386"Make this member "protected".(Æ†‡²8Ëøşù¾1
+?
+java:S2386"Make this member "protected".(õĞñ°şÿÿÿÿ8í¤‰û¾1
+?
+java:S2386"Make this member "protected".(ƒÅ¬¶şÿÿÿÿ8Ëøşù¾1
+?
+java:S2386"Make this member "protected".(Ì¥ã³ÿÿÿÿÿ8Ëøşù¾1
 \
-java:S1118":Add a private constructor to hide the implicit public one.(“³±ûÿÿÿÿ8¯ºìÀ¯1
+java:S1118":Add a private constructor to hide the implicit public one.(“³±ûÿÿÿÿ8Ìøşù¾1
+X	java:S125""<This block of commented-out lines of code should be removed.(±ŒÃ´8Üøşù¾1
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8àøşù¾1
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8àøşù¾1
