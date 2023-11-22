@@ -42,3 +42,5 @@ M
 src/procedures/Challenge.java,8/4/8461246230bec0c88bbe0f42f154ed88820fb5db
 M
 src/utils/ChallengeFrame.java,a/7/a7a316e876c107652f4ae37455534f31c2460ecc
+H
+src/utils/Operators.java,e/3/e37690619553acf6c145f7cb6a0994e49b06956c

@@ -2,19 +2,12 @@
 7
 java:S1220""Move this file to a named package.8ÿä‡£¿1
 f
-java:S3252+"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8”å‡£¿1
+java:S3252$"IUse static access with "javax.swing.WindowConstants" for "EXIT_ON_CLOSE".(¢¡´8”å‡£¿1
 _
-java:S3252,"=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(Ê¤³ñúÿÿÿÿ8•å‡£¿1
+java:S3252%"=Use static access with "java.awt.Frame" for "MAXIMIZED_BOTH".(Ê¤³ñúÿÿÿÿ8•å‡£¿1
 O
-java:S1602Ğ",Remove useless curly braces around statement(ëÓÖÚıÿÿÿÿ8¢å‡£¿1
-H	java:S106‚"+Replace this use of System.out by a logger.(¦•˜ì8¥å‡£¿1
-G	java:S106‡"+Replace this use of System.out by a logger.(Æ—¡V8¥å‡£¿1
-H	java:S106×"+Replace this use of System.out by a logger.(¦•˜ì8©å‡£¿1
-G	java:S106Ş"+Replace this use of System.out by a logger.(Æ—¡V8ªå‡£¿1
-G	java:S106 "+Replace this use of System.out by a logger.(‰‘Ÿ8­å‡£¿1
-O
-java:S1068$"2Remove this unused "challengeFrame" private field.(ö‚Ó´8±å‡£¿1
-Q
-java:S1068&"/Remove this unused "imageLabels" private field.(¡ûı†øÿÿÿÿ8±å‡£¿1
-H
-java:S1068'"+Remove this unused "buttons" private field.(ı”±8±å‡£¿1
+java:S1602É",Remove useless curly braces around statement(ëÓÖÚıÿÿÿÿ8¢å‡£¿1
+H	java:S106û"+Replace this use of System.out by a logger.(¦•˜ì8¥å‡£¿1
+G	java:S106€"+Replace this use of System.out by a logger.(Æ—¡V8¥å‡£¿1
+H	java:S106Ğ"+Replace this use of System.out by a logger.(¦•˜ì8©å‡£¿1
+G	java:S106×"+Replace this use of System.out by a logger.(Æ—¡V8ªå‡£¿1

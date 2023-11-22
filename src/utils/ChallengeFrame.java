@@ -46,6 +46,23 @@ public class ChallengeFrame extends JFrame {
                         BufferedImage image = ImageIO.read(selectedFile);
                         images[finalI] = image;
                         ImageIcon icon = new ImageIcon(image);
+                        if (finalI == 1) {
+                            int larguraOriginal = icon.getIconWidth();
+                            int alturaOriginal = icon.getIconHeight();
+
+                            // Defina a largura desejada para a nova imagem
+                            int novaLargura = 200; // Altere conforme necessário
+
+                            // Calcule a nova altura mantendo a proporção
+                            int novaAltura = (alturaOriginal * novaLargura) / larguraOriginal;
+
+                            Image imagemRedimensionada = icon.getImage().getScaledInstance(
+                                    novaLargura, novaAltura, Image.SCALE_SMOOTH);
+
+                            // Crie um novo ImageIcon com a imagem redimensionada
+                            icon = new ImageIcon(imagemRedimensionada);
+
+                        }
                         imageLabels[finalI].setIcon(icon);
                     } catch (IOException ex) {
                         ex.printStackTrace();
